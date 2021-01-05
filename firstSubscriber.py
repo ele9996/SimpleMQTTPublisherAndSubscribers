@@ -1,3 +1,5 @@
+import json
+
 import paho.mqtt.client as PahoMQTT
 import time
 
@@ -12,7 +14,7 @@ class MySubscriber:
 			self._paho_mqtt.on_connect = self.myOnConnect
 			self._paho_mqtt.on_message = self.myOnMessageReceived
 
-			self.topic = '/this/is/my/topic'
+			self.topic = '/this/is/my/date'
 			self.messageBroker = 'mqtt.eclipseprojects.io'
 			#self.messageBroker = '192.168.1.5'
 
@@ -34,7 +36,9 @@ class MySubscriber:
 
 		def myOnMessageReceived (self, paho_mqtt , userdata, msg):
 			# A new message is received
-			print ("Topic:'" + msg.topic+"', QoS: '"+str(msg.qos)+"' Message: '"+str(msg.payload) + "'")
+			my_message = "Current datetime is: " + json.loads(msg.payload)
+			#print(msg.payload)
+			print ("Topic:'" + msg.topic+"', QoS: '"+str(msg.qos)+"' Message: '"+str(my_message) + "'")
 
 
 
